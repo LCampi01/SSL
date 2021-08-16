@@ -8,6 +8,6 @@
     "Possible comment" -> "Commentary with /* */" [label = "c ≡ *"];
     "Commentary with //" -> "-Out of commentary" [label = "c ≡ /n"];
     "Commentary with //" -> "Commentary with //" [label = "E.O.C"];
-    "Commentary with /* */" -> "-Out of commentary" [label = "aux ≡ * ^ c ≡ /"];
+    "Commentary with /* */" -> "-Out of commentary" [label = "aux ≡ / ^ c ≡ *"];
     "Commentary with /* */" -> "Commentary with /* */" [label = "E.O.C, aux = c"];
 }
