@@ -3,6 +3,6 @@
 #ifndef COMMENT_REPLACER_H_INCLUDED
 #define COMMENT_REPLACER_H_INCLUDED;
 
-void commentReplacer(char, char, int, FILE *, FILE *);
+void commentReplacer(char, char, int);
 
 #endif

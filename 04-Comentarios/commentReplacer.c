@@ -9,37 +9,37 @@ enum {
 };
 
 
-void commentReplacer(char c, char aux, int state, FILE *source, FILE *destination) {
+void commentReplacer(char c, char aux, int state) {
 
     if(state == outOfCommentary) {
         if ( c == '/' ) {
-            commentReplacer(c, aux, possibleComment, source, destination);
+            commentReplacer(c, aux, possibleComment);
             return;
         } else {
-            fputc(c, destination);
+            putchar(c);
             return;
         }
     }
 
     if(state == possibleComment) {
-        if ( ( aux = fgetc(source) ) == '/') {
-            commentReplacer(c, aux, commentaryWithDoubleBar, source, destination);
+        if ( ( aux = getchar() ) == '/') {
+            commentReplacer(c, aux, commentaryWithDoubleBar);
             return;
         } else if (aux == '*') {
-            commentReplacer(c, aux, commentaryWithAsterisk, source, destination);
+            commentReplacer(c, aux, commentaryWithAsterisk);
             return;
         } else {
-            fputc(c, destination);
-            fputc(aux, destination);
+            putchar(c);
+            putchar(aux);
             return;
         }
     }
 
     if (state == commentaryWithDoubleBar) {
         char current;
-        while( ( current = fgetc(source) ) != EOF ) {
+        while( ( current = getchar() ) != EOF ) {
             if( current == '\n') {
-                fputc(current, destination);
+                putchar(current);
                 return;
             }
         }
@@ -47,10 +47,10 @@ void commentReplacer(char c, char aux, int state, FILE *source, FILE *destinatio
     
     if (state == commentaryWithAsterisk) {
         char current, currentAux;
-        while((current = fgetc(source) ) !=EOF ) {
+        while((current = getchar() ) !=EOF ) {
             if(current == '*')
             {
-                currentAux = fgetc(source);
+                currentAux = getchar();
                 if(currentAux == '/')
                     return;
             }
