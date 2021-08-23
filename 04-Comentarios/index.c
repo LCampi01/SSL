@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "commentReplacer.h"
+#include "stackOfCharsModule.h" 
+
 
 int main() {
     FILE *source, *destination;
@@ -10,10 +12,19 @@ int main() {
     scanf("%s", fileName);
     source = fopen (fileName,"r"); 
     destination = fopen ("auxFile.txt","w");
-
-    while( ( c = fgetc(source) ) != EOF )
-        commentReplacer(c, aux, 0, source, destination);
     
+    struct Stack* stack = createStack(100);
+    
+    while( ( c = fgetc(source) ) != EOF ){
+        commentReplacer(c, aux, 0, source, destination);
+        if (!checkBrackets(c, stack)){
+            puts("Los brackets no estan correctamente equilibrados");            
+        }
+    }
+    puts("Presione una tecla para salir de la consola");
+    char exit;
+    scanf("%s", exit);
+
     fclose(source);
     fclose(destination);
 
