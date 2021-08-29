@@ -1,0 +1,27 @@
+ digraph MAQUINA_DE_ESTADO {
+    rankdir=LR;
+	size="8,5"
+    node [style=filled, shape=box];
+    "-Initial state" -> "Possible comment" [label = "c ≡ /"];
+    "-Initial state" -> "Possible directive" [label = "c ≡ #"];
+    "-Initial state" -> "-Initial state" [label = "E.O.C"];
+    "Possible directive" -> "Define directive" [label = "str ≡ 'define'"];
+    "Possible directive" -> "Undef directive" [label = "str ≡ 'undef '"];
+    "Define directive" -> "Identifier define" [label = " c ≡ ' ' "];
+    "Define directive" -> "-Initial state" [label = "c ≡ /n"];
+    "Identifier define" -> "-Initial state" [label = " c ≡ /n "];
+    "Identifier define" -> "Constant value" [label = " c ≡ ' ' "];
+    "Identifier define" -> "Identifier define" [label = " E.O.C "];
+    "Constant value" -> "-Initial state" [label = " c ≡ /n "];
+    "Constant value" -> "Constant value" [label = " E.O.C "];
+    "Undef directive" -> "-Initial state" [label = "c ≡ /n"];
+    "Undef directive" -> "Identifier undef" [label = "c ≡ ' '"];
+    "Identifier undef" -> "-Initial state" [label = " c ≡ /n "];
+    "Identifier undef" -> "Identifier undef" [label = " E.O.C "];
+    "Possible comment" -> "Commentary with //" [label = "c ≡ /"];
+    "Possible comment" -> "Commentary with /* */" [label = "c ≡ *"];
+    "Commentary with //" -> "-Initial state" [label = "c ≡ /n"];
+    "Commentary with //" -> "Commentary with //" [label = "E.O.C"];
+    "Commentary with /* */" -> "-Initial state" [label = "aux ≡ / ^ c ≡ *"];
+    "Commentary with /* */" -> "Commentary with /* */" [label = "E.O.C, aux = c"];
+}
