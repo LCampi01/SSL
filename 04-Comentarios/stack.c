@@ -1,25 +1,28 @@
 #include "stack.h"
+#define ESPACIO 100 
+int pila[ESPACIO]; /* valores de la pila */
+int sp = 0; /* siguiente posición libre en la pila */
 
-int checkBrackets(char c, struct Stack* stack) {
+int checkBrackets(char c) {
     char top;
     switch (c) {
     case '[':
     case '{':
     case '(':
-        push(stack, c);
+        push(c);
         break;
     case ']':
-        top = pop(stack);
+        top = pop();
         if(top != '[')
             return 1;
         break;
     case '}':
-        top = pop(stack);
+        top = pop();
         if(top != '{')
             return 1;
         break;
     case ')':
-        top = pop(stack);
+        top = pop();
         if(top != '(')
             return 1;
         break;
@@ -29,46 +32,20 @@ int checkBrackets(char c, struct Stack* stack) {
     return 0;
 }
 
-
-#define MAX 100
-
-struct Stack {
-    char top;
-    unsigned capacity;
-    char* array;
-};
-
-
-struct Stack* createStack(unsigned capacity) {
-    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
-    stack->capacity = capacity;
-    stack->top = -1;
-    stack->array = (char*)malloc(stack->capacity * sizeof(char));
-    return stack;
+void push(double c)
+{
+    if (sp < ESPACIO)
+        pila[sp++] = c;
+    else
+        printf("error: pila llena, no puede efectuar push %g\n", c);
 }
 
-int isFull(struct Stack* stack) {
-    return stack->top == stack->capacity - 1;
-}
-
-int isEmpty(struct Stack* stack) {
-    return stack->top == -1;
-}
-
-void push(struct Stack* stack, char item) {
-    if (isFull(stack))
-        return;
-    stack->array[++stack->top] = item;
-}
-
-int pop(struct Stack* stack) {
-    if (isEmpty(stack))
-        return -1;
-    return stack->array[stack->top--];
-}
-
-int peek(struct Stack* stack) {
-    if (isEmpty(stack))
-        return -1;
-    return stack->array[stack->top];
+double pop(void)
+{
+    if (sp > 0)
+        return pila[--sp];
+    else {
+        printf("error: pila vacía\n");
+        return 0.0;
+    }
 }
