@@ -1,63 +1,70 @@
-
-
-
-struct nlist { /* nodo de lista */
-    struct nlist *next; /* puntero al siguiente */
-    char *id; /* identificador */
-    char *value; /* valor a reemplazar */
+struct symbolNode {
+    struct symbolNode *next;
+    char *id;
+    char *value;
 };
 
 const int HASHSIZE 101;
-static struct nlist *hashtab[HASHSIZE]; /* tabla de punteros */
+static struct symbolNode *hashtab[HASHSIZE];
 
-/* hash: form hash value for string s */
-unsigned hash(char *s)
-{
+unsigned hash(char *s) {
     unsigned hashval;
     for (hashval = 0; *s != '\0'; s++)
       hashval = *s + 31 * hashval;
     return hashval % HASHSIZE;
 }
 
-/* lookup: look for s in hashtab */
-struct nlist *lookup(char *s)
-{
-    struct nlist *np;
+struct symbolNode *find(char *s) {
+    struct symbolNode *np;
     for (np = hashtab[hash(s)]; np != NULL; np = np->next)
         if (strcmp(s, np->id) == 0)
-          return np; /* found */
-    return NULL; /* not found */
+          return np;
+    return NULL;
 }
 
-char *strdup(char *s) /* make a duplicate of s */
+char *duplicateString(char *s)
 {
     char *p;
-    p = (char *) malloc(strlen(s)+1); /* +1 for ’\0’ */
+    p = (char *) malloc(strlen(s)+1);
     if (p != NULL)
        strcpy(p, s);
     return p;
 }
-/* install: put (name, defn) in hashtab */
-struct nlist *install(char *name, char *defn)
-{
-    struct nlist *np;
+struct symbolNode *add(char *name, char *defn) {
+    struct symbolNode *np;
     unsigned hashval;
-    if ((np = lookup(name)) == NULL) { /* not found */
-        np = (struct nlist *) malloc(sizeof(*np));
-        if (np == NULL || (np->name = strdup(name)) == NULL)
+    if ((np = find(name)) == NULL) {
+        np = (struct symbolNode *) malloc(sizeof(*np));
+        if (np == NULL || (np->name = duplicateString(name)) == NULL)
           return NULL;
         hashval = hash(name);
         np->next = hashtab[hashval];
         hashtab[hashval] = np;
-    } else /* already there */
-        free((void *) np->defn); /*free previous defn */
-    if ((np->defn = strdup(defn)) == NULL)
+    } else
+        free((void *) np->defn);
+    if ((np->defn = duplicateString(defn)) == NULL)
        return NULL;
     return np;
 }
 
-// Undef
-// hacer remove con: 
-// 1) lookup y que guarde la direccion anterior a la estructura a remover en un aux
-// 2) Asignamos a next del auxiliar el next del buscado
-// 3) Liberar memoria del struct a remover.
+void *remove (char* id) {
+    struct symbolNode  *aux, *np;
+    np = hashtab[hash(s)];
+    aux = np->next;
+    if (strcmp(s, np->id) == 0) {
+            hashtab[hash(id)] = np -> next
+            free((void*) np);
+            return;
+        }
+    while (np != NULL) {
+        if (strcmp(s, aux->id) == 0) {
+            np->next = aux->next;
+            free((void*) aux);
+            return;
+        }
+        aux = aux->next;
+        np = np->next;
+    }
+    return NULL;
+
+}
