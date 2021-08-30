@@ -6,11 +6,9 @@
 
 int main() {
     char c, aux;
-    struct Stack* stack = createStack(100);
-
 
     while( ( c = getchar() ) != EOF ) {
-        if ( checkBrackets(c, stack) ) {
+        if ( checkBrackets(c) ) {
             fprintf(stderr, "Brackets mal balanceados. \n", strerror( 1 ));
             abort();
         }
