@@ -9,3 +9,6 @@ commentReplacer.o: commentReplacer.c commentReplacer.h
 
 stack.o: stack.c stack.h
 	gcc -c stack.c
+
+# Comando en Windows equivalente a: reemplazador < prueba.c
+# Get-Content .\prueba.c | .\reemplazador.exe
