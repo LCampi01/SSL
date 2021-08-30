@@ -14,6 +14,6 @@ digraph MaquinaDeEstado{
     q0 -> q0 [ label = "'[',λ;C\n'{',λ;L\n'(',λ;P"]
     q0 -> q1 [ label = "']',λ;C\n'}',λ;L\n')',λ;P"]
     q1 -> q1 [ label = "']',λ;C\n'}',λ;L\n')',λ;P"]    
-    q1 -> q2 [ label = "λ,Z;$"]
-    label = "$ representa que la pila esta vacia"
+    q1 -> q2 [ label = "λ,Z;Z"]
+    label = "Z es el 1er elemento de la pila ya que esta no puede estar vacia"
 }
