@@ -1,0 +1,44 @@
+digraph MaquinaDeEstado{
+
+    rankdir=LR;
+    size="8,5"
+
+    node [shape = circle, fontsize=12] STARTING;
+    node [shape = circle, fontsize=12] OPENING;
+    node [shape = circle, fontsize=12] CLOSING;
+    node [shape = circle, fontsize=12] BETWEEN_SINGLE_QUOTES_FROM_STARTING;
+    node [shape = circle, fontsize=12] BETWEEN_DOUBLE_QUOTES_FROM_STARTING;
+    node [shape = circle, fontsize=12] BETWEEN_SINGLE_QUOTES_FROM_OPENING;
+    node [shape = circle, fontsize=12] BETWEEN_DOUBLE_QUOTES_FROM_OPENING;
+    node [shape = circle, fontsize=12] BETWEEN_SINGLE_QUOTES_FROM_CLOSING;
+    node [shape = circle, fontsize=12] BETWEEN_DOUBLE_QUOTES_FROM_CLOSING;
+    node [shape = doublecircle, fontsize=12] EQUILIBRATE;
+
+
+    node [shape = point ] qi;
+    qi -> STARTING;
+
+    STARTING -> OPENING [ label = "'[',λ;1\n'{',λ;1\n'(',λ;1"]
+    STARTING -> BETWEEN_DOUBLE_QUOTES_FROM_STARTING [ label = " '' " ]
+    BETWEEN_DOUBLE_QUOTES_FROM_STARTING -> STARTING [ label = " '' " ]
+    STARTING -> BETWEEN_SINGLE_QUOTES_FROM_STARTING [ label = " ' " ]
+    BETWEEN_SINGLE_QUOTES_FROM_STARTING -> STARTING [ label = " ' " ]
+    STARTING -> EQUILIBRATE [ label = "EOF,$;λ"]
+    
+    OPENING -> OPENING [ label = "'[',λ;C\n'{',λ;L\n'(',λ;P"] 
+    OPENING -> CLOSING [ label = "']',C;λ\n'}',L;λ\n')',P;λ"]
+    OPENING -> BETWEEN_DOUBLE_QUOTES_FROM_OPENING [ label = " '' " ]
+    BETWEEN_DOUBLE_QUOTES_FROM_OPENING -> OPENING [ label = " '' " ]
+    OPENING -> BETWEEN_SINGLE_QUOTES_FROM_OPENING [ label = " ' " ]
+    BETWEEN_SINGLE_QUOTES_FROM_OPENING -> OPENING [ label = " ' " ]
+
+    CLOSING -> CLOSING [ label = "']',C;λ\n'}',L;λ\n')',P;λ"]
+    CLOSING -> OPENING [ label = "'[',λ;C\n'{',λ;L\n'(',λ;P"] 
+    CLOSING -> BETWEEN_DOUBLE_QUOTES_FROM_CLOSING [ label = " '' " ]
+    BETWEEN_DOUBLE_QUOTES_FROM_CLOSING -> CLOSING [ label = " '' " ]
+    CLOSING -> BETWEEN_SINGLE_QUOTES_FROM_CLOSING [ label = " ' " ]
+    BETWEEN_SINGLE_QUOTES_FROM_CLOSING -> CLOSING [ label = " ' " ]
+
+    CLOSING -> EQUILIBRATE [ label = "EOF,$;λ"]
+
+}

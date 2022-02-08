@@ -1,0 +1,32 @@
+Unit ->
+    eof
+    Base
+    Base Unit
+
+Base ->
+    lPar Base rPar
+    lBracket Base rBracket
+    lBrace Base rBrace
+    Directive
+    ifDirective
+    Text
+
+Directive ->
+    numeral include punctuator identifier punctuator newLine
+    numeral define identifier replaceText newLine
+    numeral undef identifier newLine
+
+ifDirective ->
+    numeral ifdef identifier newLine . numeral endif newLine
+
+Text ->
+    comment
+    identifier
+    punctuator
+    newLine
+    identifier Text
+    punctuator Text
+    newLine Text
+    comment Text
+
+    

@@ -1,0 +1,14 @@
+ digraph MAQUINA_DE_ESTADO {
+    rankdir=LR;
+	size="8,5"
+    node [style=filled, shape=box];
+    "-Initial state" -> "Possible comment" [label = "c ≡ /"];
+    "-Initial state" -> "-Initial state" [label = "E.O.C"];
+    "Possible comment" -> "Commentary with //" [label = "c ≡ /"];
+    "Possible comment" -> "Commentary with /* */" [label = "c ≡ *"];
+    "Commentary with //" -> "-Initial state" [label = "c ≡ /n"];
+    "Commentary with //" -> "Commentary with //" [label = "E.O.C"];
+    "Commentary with /* */" -> "-Initial state" [label = "aux ≡ / ^ c ≡ *"];
+    "Commentary with /* */" -> "Commentary with /* */" [label = "E.O.C, aux = c"];
+}
+

@@ -1,0 +1,9 @@
+digraph MAQUINA_DE_ESTADO {
+    rankdir=LR;
+	size="8,5"
+    node [style=filled];
+    IN -> "-OUT" [label = "E.O.C  \n ++longitudes[longitud] \n longitud = 0"];
+    "-OUT" -> IN [label = "E.O.C  \n longitud++"];
+    IN -> IN [label = "c ≠ /n \n ^ \n ≠ ' ' \n ^ \n ≠ /t \n longitud++"];
+    "-OUT" -> "-OUT" [label = "c ≡ /n \n ∨ \n ≡ ' ' \n ∨ \n ≡ /t"];
+}

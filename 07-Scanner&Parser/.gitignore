@@ -1,0 +1,7 @@
+preprocessBrackets.o
+parser.o
+scanner.o
+stack.o
+symbolTable.o
+preprocessBrackets.exe
+preprocessBrackets

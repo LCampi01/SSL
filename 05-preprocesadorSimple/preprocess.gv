@@ -1,0 +1,52 @@
+ digraph MAQUINA_DE_ESTADO {
+    rankdir=LR;
+	size="8,5"
+    node [style=filled, shape=box];
+    "-Initial state" -> "Possible comment" [label = "c ≡ /"];
+    "-Initial state" -> "Possible directive" [label = "c ≡ #"];
+    "-Initial state" -> "Define constant" [label = "c ≡ ( ∨ c ≡ ="]; 
+    "-Initial state" -> "-Initial state" [label = "E.O.C"];
+    "Define constant" -> "Define constant" [label = "E.O.C"];
+    "Define constant" -> "-Initial state" [label = "c ≡ ) ∨ c ≡ ;"];
+    "Possible directive" -> "D" [label = "c ≡ 'd'"];
+    "Possible directive" -> "I" [label = "c ≡ 'i'"];
+    "I" -> "In" [label = "c ≡ 'n'"]
+    "I" -> "-Initial state" [label = "E.O.C"]
+    "In" -> "Include directive" [label = "c ≡ 'c'"]
+    "Include directive" -> "-Initial state" [label = "E.O.C"]
+    "Include location" -> "-Initial state" [label = "E.O.C"]
+    "Include directive" -> "Include location" [label = "c ≡ ' '"]
+    "Include location" -> "Local include" [label = "c ≡ '"]
+    "Local include" -> "Local include" [label = "E.O.C"]
+    "Local include" -> "-Initial state" [label = "(c ≡ ' ^ aux ≡  '  ) ∨ (c ≡ '' ^ aux ≡ '' )"]
+    "External include" -> "-Initial state" [label = "c ≡ '>'"]
+    "External include" -> "External include" [label = "E.O.C"]
+    "Include location" -> "External include" [label = "c ≡ '<'"]
+    "In" -> "-Initial state" [label = "E.O.C"]
+    "D" -> "De" [label = "c ≡ 'e'"];
+    "D" -> "-Initial state" [label = "E.O.C"];
+    "De" -> "Define directive" [label = "c ≡ 'f'"];
+    "De" -> "-Initial state" [label = "E.O.C"];
+    "Possible directive" -> "U" [label = "C ≡ 'u'"];
+    "U" -> "Un" [label = "C ≡ 'n'"];
+    "U" -> "-Initial state" [label = "E.O.C"];
+    "Un" -> "Undef directive" [label = "C ≡ 'd'"];
+    "Un" -> "-Initial state" [label = "E.O.C"];
+    "Define directive" -> "Identifier define" [label = " c ≡ ' ' "];
+    "Define directive" -> "-Initial state" [label = "c ≡ /n"];
+    "Identifier define" -> "-Initial state" [label = " c ≡ /n "];
+    "Identifier define" -> "Constant value" [label = " c ≡ ' ' "];
+    "Identifier define" -> "Identifier define" [label = " E.O.C "];
+    "Constant value" -> "-Initial state" [label = " c ≡ /n "];
+    "Constant value" -> "Constant value" [label = " E.O.C "];
+    "Undef directive" -> "-Initial state" [label = "c ≡ /n"];
+    "Undef directive" -> "Identifier undef" [label = "c ≡ ' '"];
+    "Identifier undef" -> "-Initial state" [label = " c ≡ /n "];
+    "Identifier undef" -> "Identifier undef" [label = " E.O.C "];
+    "Possible comment" -> "Commentary with //" [label = "c ≡ /"];
+    "Possible comment" -> "Commentary with /* */" [label = "c ≡ *"];
+    "Commentary with //" -> "-Initial state" [label = "c ≡ /n"];
+    "Commentary with //" -> "Commentary with //" [label = "E.O.C"];
+    "Commentary with /* */" -> "-Initial state" [label = "aux ≡ / ^ c ≡ *"];
+    "Commentary with /* */" -> "Commentary with /* */" [label = "E.O.C, aux = c"];
+}
